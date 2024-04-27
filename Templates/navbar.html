@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>E Survey Web Application</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: skyblue;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #ffffff; /* Background color for the navbar */
+            border-bottom: 2px solid #ddd; /* Border bottom for the navbar */
+            padding-top: 10px; /* Top padding for the navbar */
+            padding-bottom: 10px; /* Bottom padding for the navbar */
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            color: #333; /* Text color for the brand */
+        }
+
+        .navbar-nav .nav-link {
+            color: #333; /* Text color for the nav links */
+            margin-right: 15px; /* Right margin for the nav links */
+        }
+
+        .navbar-nav .nav-link.active {
+            font-weight: bold; /* Bold font for active link */
+        }
+
+        .navbar-form {
+            margin-right: 15px; /* Right margin for the search form */
+        }
+
+        .form-control {
+            border-radius: 20px; /* Border radius for the search input */
+        }
+
+        .btn-outline-success {
+            border-radius: 20px; /* Border radius for the search button */
+        }
+
+        .container {
+            padding-top: 80px; /* Top padding for the content below the navbar */
+        }
+
+          body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: lightgreen;
+        }
+        .container-y {
+            max-width: 1000px;
+            margin:  auto;
+            padding: 40px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        header h1 {
+            color: #333;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        header p {
+            color: #666;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .survey-image {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .survey-image img {
+            max-width: 100%;
+            height: auto;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">E SURVEY</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <form class="navbar-form d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'fhome' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'login' %}">Survey</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'login' %}">List of Surveys</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'login' %}">Survey distribution</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            SURVEY
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="nav-link active" aria-current="page" href="{% url 'login' %}">Reference</a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="{% url 'login' %}">Customer Verification</a>
+                            </li>
+                            <li><a class="dropdown-item" href="{% url 'login' %}">Website FeedBack</a></li>
+                            <li><hr class="dropdown-divider">Resources</li>
+                            <li><a class="dropdown-item" href="">Pricing</a></li>
+                        </ul>
+                    </li>
+
+                     <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'login' %}">Login</a>
+                    </li>
+                      <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'signup' %}">Sign up</a>
+                    </li>
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">Logout</a>-->
+<!--                    </li>-->
+
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <span class="nav-link">Welcome, {{ user.username }}</span>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Login</a>
+                        </li>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% block body %}
+ <div class="container-y">
+        <header>
+            <h1>Welcome to E-Survey</h1>
+            <p>Conduct surveys, gather insights, make informed decisions.</p>
+        </header>
+        <div class="survey-image">
+            <img src="survey_image.jpg" alt="Survey Image">
+        </div>
+        <div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget leo ut massa lobortis lacinia nec sit amet nibh. Cras eget dui ac odio fringilla maximus nec vitae ipsum.</p>
+            <p>Praesent euismod, mi et sagittis tempus, sem risus consequat urna, vel ultricies libero mi ac justo. Nulla facilisi.</p>
+            <p>Ut nec dolor et lectus maximus dapibus. Duis posuere augue non tellus condimentum posuere.</p>
+        </div>
+        <div style="text-align: center;">
+            <a href="{% url 'login' %}" class="btn">Start Survey</a>
+        </div>
+        {% endblock %}
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+{% extends 'secondnavbar.html' %}
+{% load static %}
+
+{% block body %}
+<html>
+
+<head>
+    <title>Survey Types</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: -10px;
+            color: black;
+            text-align: center;
+            background-color: grey; /* Background color for the body */
+        }
+
+        #sidebar {
+            background-color: lightgreen; /* Dark background color for the sidebar */
+            padding: 20px;
+            height: 100vh;
+            width: 200px;
+            position: fixed;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            border-right: 2px solid #000; /* Black border on the right */
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        button {
+            background-color: transparent;
+            border: none;
+            margin-bottom: 10px; /* Adjusted margin for list items */
+            color: #fff;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ccc; /* Background color on hover */
+        }
+
+        #content {
+            margin-left: 220px; /* Adjusted margin to create space between sidebar and content */
+            text-align: left;
+            padding: 20px; /* Add padding for content */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="sidebar">
+        <h1>Types of Surveys..</h1>
+        <a href="{% url 'customers' %}" onclick="handlecustomers()" style="display: inline-block; background-color: lightblue; color: black; padding: 10px 20px; text-decoration: none; border-radius: 5px; cursor: pointer;">
+    Customers
+</a>
+<a href="{% url 'educational' %}" onclick="handleeducational()" style="display: inline-block; background-color: lightblue; color: black; padding: 10px 20px; text-decoration: none; border-radius: 5px; cursor: pointer;">
+   Education
+</a>
+        <button>Employees: 76</button>
+        <button>Events: 11</button>
+        <button>Forms: 68</button>
+        <button>Healthcare: 24</button>
+        <button>Market Research: 60</button>
+        <button>Nonprofit: 5</button>
+        <button>Other: 51</button>
+    </div>
+
+    <div id="content">
+        <!-- Your content goes here -->
+    </div>
+
+</body>
+
+</html>
+{% endblock %}

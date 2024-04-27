@@ -1,0 +1,143 @@
+{% extends 'Navbar.html' %}
+{% load static %}
+
+{% block body %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(45deg, #3498db, #2ecc71);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .container-l {
+      background-color: white;
+      padding: 25px;
+      width: 39%;
+      align: center;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      transform: perspective(1000px) rotateY(10deg);
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .container-l:hover {
+      transform: perspective(1000px) rotateY(0);
+    }
+
+    h3 {
+      text-align: center;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      color: #555;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: fit-content;
+      padding: 12px 24px;
+      border-radius: 100px;
+      border: none;
+      box-shadow: inset 0px 22px 20px 10px rgb(0, 0, 0);
+      font-weight: 800;
+      color: antiquewhite;
+      letter-spacing: .1rem;
+      transition: all 0.51s ease-in-out;
+    }
+
+    button:hover {
+      transform: translateY(5px);
+      box-shadow: inset 1px -11px 25px 10px rgb(91, 88, 240);
+    }
+    a.button {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 100px;
+  border: none;
+  box-shadow: inset 0px 22px 20px 10px rgb(0, 0, 0);
+  font-weight: 800;
+  color: antiquewhite;
+  letter-spacing: .1rem;
+  text-decoration: none; /* Remove default underline */
+  transition: all 0.51s ease-in-out;
+}
+
+a.button:hover {
+  transform: translateY(5px);
+  box-shadow: inset 1px -11px 25px 10px rgb(91, 88, 240);
+}
+
+  </style>
+</head>
+<body>
+  <h1>E SURVEY WEB APPLICATION</h1>
+  <div id="loginContainer" class="container-l">
+    <h3>Login</h3>
+    <label for="username">Username:</label>
+    <input type="text" id="username" placeholder="Enter username">
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" placeholder="Enter password">
+
+    <label for="captcha">CAPTCHA: <span id="captcha"></span></label>
+    <input type="text" id="enteredCaptcha" placeholder="Enter CAPTCHA">
+<a id="loginButton" href="#" class="button">Login</a>
+    <a>don't you have an account?? </a>
+    <a href="{% url 'signup' %}" onclick="handlesignup()" class="button">Signup</a>
+
+  </div>
+
+  <script>
+    function generateCaptcha() {
+      const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+      let captcha = '';
+      for (let i = 0; i < 5; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        captcha += characters.charAt(randomIndex);
+      }
+      document.getElementById('captcha').textContent = captcha;
+    }
+
+   function handleLogin() {
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  const enteredCaptcha = document.getElementById('enteredCaptcha').value;
+  const generatedCaptcha = document.getElementById('captcha').textContent;
+
+  if (username.length >= 6 && password.length >= 6 && enteredCaptcha === generatedCaptcha) {
+    // Redirect to the homepage
+    window.location.href = '{% url 'home' %}';
+  } else {
+    // Display error message or handle invalid input
+    alert('Login failed. Please check your credentials and CAPTCHA.');
+    generateCaptcha();
+  }
+}
+
+// Attach the handleLogin function to the login button
+document.getElementById('loginButton').addEventListener('click', handleLogin);
+
+
+    window.onload = generateCaptcha;
+  </script>
+</body>
+</html>
+{% endblock %}

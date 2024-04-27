@@ -1,0 +1,23 @@
+{% extends 'secondnavbar.html' %}
+{% load static %}
+
+{% block body %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Survey Distribution</title>
+</head>
+
+<body>
+    <h2>{{ survey.title }} - Distribution</h2>
+
+    <ul>
+        {% for recipient in recipients %}
+        <li>{{ recipient.user.username }} - {% if recipient.is_completed %}Completed{% else %}Pending{% endif %}</li>
+        {% endfor %}
+    </ul>
+</body>
+
+</html>
+{% endblock %}

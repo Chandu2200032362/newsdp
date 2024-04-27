@@ -1,0 +1,133 @@
+{% extends 'secondnavbar.html' %}
+{% load static %}
+
+{% block body %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Website Feedback</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Add your custom stylesheets or additional CSS links here -->
+    <style>
+        /* Your existing styles remain unchanged */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .webcontainer {
+            max-width: 600px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #007bff;
+            text-align: center;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* New style for the thank you message */
+        .thank-you-message {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            color: #28a745;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="webcontainer">
+        <h2>Website Feedback</h2>
+        <form action="/submit_feedback" method="post" id="feedbackForm">
+            <!-- CSRF token -->
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="name">Your Name:</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Your Email:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="feedback">Feedback:</label>
+                <textarea class="form-control" id="feedback" name="feedback" rows="5" required></textarea>
+            </div>
+
+            <button type="submit">Submit Feedback</button>
+        </form>
+
+        <!-- Thank you message section -->
+        <div class="thank-you-message" id="thankYouMessage">
+            <p>Thank you for your feedback!</p>
+        </div>
+    </div>
+
+    <!-- Add jQuery for simplicity (you can also use vanilla JavaScript) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Handle form submission
+            $("#feedbackForm").submit(function (event) {
+                event.preventDefault(); // Prevent the form from submitting the traditional way
+
+                // Validate name
+                var name = $("#name").val();
+                if (name.length < 7) {
+                    alert("Name must be 7 characters or more.");
+                    return;
+                }
+
+                // Validate email
+                var email = $("#email").val();
+                if (!email.endsWith(".com") && !email.endsWith(".in")) {
+                    alert("Email must end with '.com' or '.in'.");
+                    return;
+                }
+
+                // You can add your AJAX code here to handle the form submission to the server
+                // For simplicity, I'm just showing the thank you message without actual submission handling
+                $("#feedbackForm").hide();
+                $("#thankYouMessage").show();
+            });
+        });
+    </script>
+</body>
+
+</html>
+{% endblock %}

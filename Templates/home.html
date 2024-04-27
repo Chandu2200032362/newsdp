@@ -1,0 +1,75 @@
+{% extends 'secondnavbar.html' %}
+{% load static %}
+
+{% block body %}
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Survey Home Page</title>
+  <style>
+    /* CSS for images */
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto 20px; /* Centers images and adds space below */
+    }
+
+    /* CSS for text */
+    h1 {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 36px;
+      color: #333;
+      font-family: 'Arial', sans-serif; /* Specifies a fallback font */
+    }
+
+    h4, h6 {
+      text-align: center;
+      color: #666;
+      font-style: italic; /* Makes the text italic */
+    }
+
+    p {
+      text-align: center;
+      font-size: 18px;
+      line-height: 1.5;
+      color: #888;
+      margin-bottom: 30px; /* Adds space below paragraphs */
+    }
+
+    /* CSS for the container */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f9f9f9; /* Sets a light gray background color */
+      border: 1px solid #ccc; /* Adds a border */
+      border-radius: 10px; /* Adds a slight border-radius */
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adds a shadow to the container */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>
+      <img src="{% static 'Images/s.jpg' %}" alt="My image" width="500" height="400"/>
+      Welcome to E Survey Web Application
+    </h1>
+    <h4>Surveys are a powerful tool for collecting information, opinions, and feedback from individuals.</h4>
+
+    <h6>
+      They are widely used in various fields, including market research, education, and employee engagement.
+      <img src="{% static 'Images/surv.png' %}" alt="My image" width="500" height="400"/>
+    </h6>
+
+    <p>
+      Our platform provides you with the ability to create, distribute, and analyze surveys effortlessly. Whether you're conducting customer satisfaction surveys, educational assessments, or employee feedback, we've got you covered!
+    </p>
+  </div>
+</body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends 'Navbar.html' %}
+{% load static %}
+
+{% block body %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>  Welcome to E-Survey</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: lightgreen;
+        }
+        .chandu {
+            max-width: 1000px;
+            margin:  auto;
+            padding: 40px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        header h1 {
+            color: #333;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        header p {
+            color: #666;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .survey-image {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .survey-image img {
+            max-width: 100%;
+            height: auto;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="chandu">
+        <header>
+            <h1>Welcome to E-Survey</h1>
+            <p>Conduct surveys, gather insights, make informed decisions.</p>
+        </header>
+        <div class="survey-image">
+           <img src="{% static 'Images/survey.gif' %}" alt="My image"/>
+        </div>
+        <div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget leo ut massa lobortis lacinia nec sit amet nibh. Cras eget dui ac odio fringilla maximus nec vitae ipsum.</p>
+            <p>Praesent euismod, mi et sagittis tempus, sem risus consequat urna, vel ultricies libero mi ac justo. Nulla facilisi.</p>
+            <p>Ut nec dolor et lectus maximus dapibus. Duis posuere augue non tellus condimentum posuere.</p>
+        </div>
+        <div style="text-align: center;">
+            <a href="{% url 'login' %}" class="btn">Start Survey</a>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

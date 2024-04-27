@@ -1,0 +1,221 @@
+{% extends 'secondnavbar.html' %}
+{% load static %}
+
+{% block body %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey with User Answers</title>
+ <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: grey;
+            margin: 0;
+            padding: 0;
+            background-image: url('static/Images/survey.gif');
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            max-width: 600px;
+            padding: 200px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #workspace {
+            width: 400px;
+            height: 200px;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .draggable {
+            cursor: move;
+            display: inline-block;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        .question {
+            margin-bottom: 10px;
+        }
+
+        .option-input {
+            width: 80%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #userAnswers {
+            margin-top: 20px;
+        }
+
+        #formContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Survey with User Answers</h1>
+
+    <div class="container">
+        <div class="form-container">
+            <h2>Question Types</h2>
+            <div class="draggable" draggable="true" data-type="checkbox">Checkboxes</div>
+            <div class="draggable" draggable="true" data-type="radio">Radio Buttons</div>
+            <div class="draggable" draggable="true" data-type="range">Range</div>
+            <div class="draggable" draggable="true" data-type="openText">Open Text</div>
+            <div class="draggable" draggable="true" data-type="email">Email</div>
+        </div>
+
+        <div class="form-container" id="formContainer">
+            <h2>Workspace</h2>
+            <div id="workspace" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            <button onclick="submitAnswers()">Submit Answers</button>
+            <div id="userAnswers"></div>
+            <img src="static/Images/survey.gif">
+        </div>
+    </div>
+
+<script>
+    function allowDrop(event) {
+        event.preventDefault();
+    }
+
+    function drop(event) {
+        event.preventDefault();
+        const questionType = event.dataTransfer.getData('text/plain');
+        const workspace = document.getElementById('workspace');
+        const questionDiv = document.createElement('div');
+        questionDiv.className = 'question';
+        questionDiv.innerHTML = `<p><b>Question Type:</b> ${questionType}</p>`;
+
+        const questionInput = document.createElement('input');
+        questionInput.className = 'question-input';
+        questionInput.placeholder = 'Type your question here';
+        questionDiv.appendChild(questionInput);
+
+        if (questionType === 'checkbox') {
+            for (let i = 1; i <= 5; i++) {
+                const optionInput = document.createElement('input');
+                optionInput.className = 'option-input';
+                optionInput.placeholder = `Option ${i}`;
+                optionInput.type = 'checkbox'; // Set input type to checkbox
+                questionDiv.appendChild(optionInput);
+            }
+        } else if (questionType === 'radio') {
+            for (let i = 1; i <= 5; i++) {
+                const optionInput = document.createElement('input');
+                optionInput.className = 'option-input';
+                optionInput.placeholder = `Option ${i}`;
+                optionInput.type = 'radio'; // Set input type to radio
+                optionInput.name = 'radio-group'; // Set a common name for radio buttons
+                questionDiv.appendChild(optionInput);
+            }
+        }
+
+        workspace.appendChild(questionDiv);
+    }
+
+    function submitAnswers() {
+        const userAnswersDiv = document.getElementById('userAnswers');
+        const formContainer = document.getElementById('formContainer');
+        const answers = [];
+        const questions = document.querySelectorAll('.question');
+
+        questions.forEach((question, index) => {
+            const questionType = question.querySelector('b').innerText.split(": ")[1];
+            const questionInput = question.querySelector('.question-input');
+            const questionText = questionInput.value.trim(); // Get the typed question
+
+            let answer;
+
+            if (questionType === 'Checkbox') {
+                const checkboxes = question.querySelectorAll('.option-input');
+                answer = Array.from(checkboxes).filter(checkbox => checkbox.checked).map(checkbox => checkbox.value);
+            } else {
+                const input = question.querySelector('.option-input:checked');
+                answer = input ? input.value : ''; // Get the value of the selected radio button or empty string if none selected
+            }
+
+            answers.push({ questionIndex: index + 1, questionType, questionText, answer });
+        });
+
+        console.log('User Answers:', answers);
+        userAnswersDiv.innerHTML = `<h3>User Answers:</h3>${JSON.stringify(answers, null, 2)}`;
+
+        // Create form and submit button dynamically
+        const form = document.createElement('form');
+        form.setAttribute('action', '#'); // Replace with your form submission URL
+        form.setAttribute('method', 'post');
+
+        answers.forEach((answer, index) => {
+            const input = document.createElement('input');
+            input.setAttribute('type', 'hidden');
+            input.setAttribute('name', `answer_${index + 1}`);
+            input.setAttribute('value', JSON.stringify(answer));
+
+            form.appendChild(input);
+        });
+
+        const submitButton = document.createElement('button');
+        submitButton.setAttribute('type', 'submit');
+        submitButton.textContent = 'Submit Form';
+
+        form.appendChild(submitButton);
+        formContainer.appendChild(form);
+
+        // Generate link
+        const linkContainer = document.createElement('div');
+        const link = document.createElement('a');
+        link.setAttribute('href', '#'); // Replace with the link destination
+        link.textContent = 'Generate Link';
+        link.addEventListener('click', function () {
+            const generatedLink = generateLink(answers);
+            alert('Generated Link: ' + generatedLink);
+        });
+
+        linkContainer.appendChild(link);
+        formContainer.appendChild(linkContainer);
+    }
+
+    function generateLink(answers) {
+        // Replace this logic with your desired link generation
+        const baseLink = 'https://example.com/survey?';
+
+        const queryParams = answers.map((answer, index) => `answer_${index + 1}=${encodeURIComponent(JSON.stringify(answer))}`);
+        const fullLink = baseLink + queryParams.join('&');
+
+        return fullLink;
+    }
+</script>
+
+</body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Your head content here -->
+</head>
+<body>
+<nav class="navbar navbar-expand-lg fixed-top">
+    <!-- Your navbar content here -->
+
+    <ul class="navbar-nav ms-auto">
+        <li>
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <span class="nav-link">Welcome, {{ user.username }}</span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+            {% else %}
+                <!-- Other navigation items for unauthenticated users -->
+            {% endif %}
+        </li>
+    </ul>
+</nav>
+
+{% block body %}
+    <!-- Your body content here -->
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,26 @@
+{% extends 'secondnavbar.html' %}
+{% load static %}
+
+{% block body %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Survey List</title>
+</head>
+
+<body>
+    <h2>Survey List</h2>
+
+    <ul>
+        {% for survey in surveys %}
+            <li>
+                {{ survey.title }}
+                <a href="{% url 'survey_distribution' survey_id=survey.id %}">Distribute</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+
+</html>
+{% endblock %}

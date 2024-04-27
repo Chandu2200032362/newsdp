@@ -1,0 +1,88 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Verification Forms</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .form-container {
+            display: none;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Customer Verification Forms</h1>
+
+<div>
+    <a id="Button" href="{% url 'edform1' %}" class="button">Template1</a>
+
+    <button onclick="showForm('form3')" class="button">Form 3</button>
+</div>
+
+<div id="edform1" class="form-container">
+    <h2>Form 1:Student Verification</h2>
+    <form>
+        <button type="submit" class="button">Submit</button>
+    </form>
+</div>
+
+<div id="form2" class="form-container">
+    <h2>Form 2: Certificates Verification</h2>
+    <form>
+        <button type="submit" class="button">Submit</button>
+    </form>
+</div>
+
+<div id="form3" class="form-container">
+    <h2>Form 3: Contact Information Verification</h2>
+    <form>
+        <button type="submit" class="button">Submit</button>
+    </form>
+</div>
+
+<script>
+    function showForm(formId) {
+        var forms = document.getElementsByClassName('form-container');
+        for (var i = 0; i < forms.length; i++) {
+            forms[i].style.display = 'none';
+        }
+        var selectedForm = document.getElementById(formId);
+        if (selectedForm) {
+            selectedForm.style.display = 'block';
+        }
+    }
+</script>
+
+</body>
+</html>
